@@ -105,17 +105,26 @@ const BoldIdeas = () => {
             left: `${showLeft}px`,
             bottom: `${showBottom}px`,
             borderRadius: `${showRadius}px`,
+            '--ease': ease,
           }}
         >
+          <div className="bold__media-inner" />
           <video
             className="bold__video"
-            src="/approach.mp4"
+            src={`${import.meta.env.BASE_URL}minecraft.mp4`}
             autoPlay
             muted
             loop
             playsInline
           />
-          <div className="bold__media-inner" />
+          <div className="bold__media-grain" />
+          <div className="bold__media-sheen" />
+          <div className="bold__media-vignette" />
+          <div className="bold__media-frame" />
+          <div className="bold__media-tag">
+            <span className="bold__media-dot" />
+            REAL-TIME 3D
+          </div>
         </div>
       </div>
     </section>

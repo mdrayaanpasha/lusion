@@ -1,0 +1,95 @@
+/* 500vh track drives the pinned 3D scene */
+.space-pin {
+  position: relative;
+  height: 500vh;
+  background: #04050a;
+}
+
+.space-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: #04050a;
+}
+
+.space__canvas {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* DOM overlay above the canvas */
+.space__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+}
+
+.space__hint {
+  position: absolute;
+  left: 50%;
+  bottom: 3vh;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.space__hint-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #8fe9ff;
+  box-shadow: 0 0 12px #8fe9ff;
+  animation: space-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes space-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.6); }
+}
+
+.space__copy {
+  position: absolute;
+  right: 6vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(38vw, 560px);
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.space__para {
+  margin: 0;
+  font-size: clamp(1.1rem, 1.5vw, 1.65rem);
+  line-height: 1.42;
+  font-weight: 400;
+  opacity: 0;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.6);
+  will-change: transform, opacity;
+}
+
+@media (max-width: 900px) {
+  .space__copy {
+    right: 5vw;
+    left: 5vw;
+    width: auto;
+    top: auto;
+    bottom: 12vh;
+    transform: none;
+  }
+  .space__para {
+    font-size: 1.05rem;
+  }
+}

@@ -3,6 +3,7 @@ import ConnectPage from '../models/connectors.jsx';
 import BoldIdeas from '../components/BoldIdeas.jsx';
 import FeaturedWork from '../components/FeaturedWork.jsx';
 import ImmersiveSection from '../components/ImmersiveSection.jsx';
+import SpaceSection from '../components/SpaceSection.jsx';
 
 const Home = () => {
   return (
@@ -18,6 +19,7 @@ const Home = () => {
       <BoldIdeas />
       <FeaturedWork />
       <ImmersiveSection />
+      <SpaceSection />
     </>
   )
 }
