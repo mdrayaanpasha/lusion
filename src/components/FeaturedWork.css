@@ -1,0 +1,128 @@
+.work {
+  position: relative;
+  background: #ececf3;
+  color: #0d0d12;
+  padding: 6rem 4rem 8rem 4rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.work__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.work__title {
+  margin: 0;
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+}
+
+.work__intro {
+  max-width: 420px;
+  margin: 1rem 0 0 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* two-column grid of equal-size cards */
+.work__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 2.5rem;
+  row-gap: 4rem;
+}
+
+.card {
+  display: block;
+  cursor: pointer;
+}
+
+.card__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card:hover .card__media {
+  transform: scale(0.985);
+}
+
+/* subtle texture over the gradient */
+.card__grain {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 50% at 70% 20%, rgba(255, 255, 255, 0.18), transparent 60%),
+    radial-gradient(50% 60% at 20% 80%, rgba(0, 0, 0, 0.18), transparent 60%);
+  mix-blend-mode: overlay;
+}
+
+.card__tags {
+  margin-top: 1.4rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #15151a;
+}
+
+.card__name {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 0.6rem;
+  font-size: clamp(1.8rem, 3.2vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* arrow slides in on hover */
+.card__arrow {
+  display: inline-block;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateX(-10px);
+  transition: max-width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.35s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card:hover .card__arrow {
+  max-width: 1.4em;
+  opacity: 1;
+  transform: translateX(0);
+  margin-right: 0.3em;
+}
+
+.card__label {
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card:hover .card__label {
+  transform: translateX(0.1em);
+}
+
+@media (max-width: 800px) {
+  .work {
+    padding: 4rem 1.5rem 5rem 1.5rem;
+  }
+  .work__head {
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .work__grid {
+    grid-template-columns: 1fr;
+    row-gap: 2.5rem;
+  }
+}

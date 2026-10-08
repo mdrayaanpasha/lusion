@@ -1,0 +1,133 @@
+/* tall track that drives the pinned scroll (100vh content + 100vh scroll) */
+.bold-pin {
+  position: relative;
+  height: 200vh;
+  background: #ececf3;
+}
+
+/* pinned viewport */
+.bold-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: #ececf3;
+  color: #0d0d12;
+  font-family: 'Inter', sans-serif;
+}
+
+.bold__content {
+  position: absolute;
+  inset: 0;
+  padding: 7rem 4em 3em 4em;
+  z-index: 2;
+  will-change: opacity;
+}
+
+/* ---- arc ---- */
+.bold__arc {
+  position: absolute;
+  top: 10vh;
+  left: -6vw;
+  width: min(48vw, 680px);
+  height: min(48vw, 680px);
+  z-index: 1;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* ---- heading ---- */
+.bold__title {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  font-size: clamp(3rem, 10vw, 10rem);
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+}
+
+/* ---- copy (bottom-right) ---- */
+.bold__copy {
+  position: absolute;
+  right: 4em;
+  bottom: 3em;
+  max-width: 560px;
+  z-index: 2;
+}
+
+.bold__text {
+  margin: 0 0 2em 0;
+  font-size: clamp(1.05rem, 1.4vw, 1.45rem);
+  line-height: 1.35;
+  font-weight: 400;
+}
+
+.bold__approach {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9em;
+  background: #fff;
+  color: #0d0d12;
+  height: 58px;
+  padding: 0 2em;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+}
+
+.bold__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  display: inline-block;
+}
+.bold__dot--dark {
+  background: #0d0d12;
+  width: 9px;
+  height: 9px;
+}
+
+/* ---- the expanding video panel ---- */
+.bold__media {
+  position: absolute;
+  overflow: hidden;
+  background: #cfcfe6;
+  z-index: 3;
+  box-shadow: 0 20px 60px rgba(40, 30, 90, 0.18);
+  will-change: width, height, left, bottom;
+}
+
+.bold__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.bold__media-inner {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(120% 90% at 20% 10%, #b9b6ff 0%, transparent 55%),
+    radial-gradient(130% 110% at 85% 90%, #8f8bff 0%, transparent 60%),
+    linear-gradient(135deg, #a7a4f5 0%, #6f6bdd 100%);
+  filter: saturate(1.05);
+}
+
+@media (max-width: 1000px) {
+  .bold__content {
+    padding: 6rem 2em 2em 2em;
+  }
+  .bold__copy {
+    right: 2em;
+    bottom: 2em;
+    max-width: 70vw;
+  }
+}
