@@ -9,7 +9,22 @@
   align-items: center;
   padding: 1.4rem 2.5rem;
   font-family: 'Inter', sans-serif;
-  transition: color 0.4s ease;
+  transition: color 0.4s ease, opacity 0.45s ease, transform 0.45s ease;
+  background: rgba(236, 236, 243, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* reveal/hide — the hero shows its own nav, this one slides in afterwards */
+.nav-bar--hidden {
+  opacity: 0;
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+.nav-bar--shown {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .nav-bar__logo {

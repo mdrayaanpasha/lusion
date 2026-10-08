@@ -8,6 +8,11 @@ const Home = () => {
     <>
       <div className="hero-3d">
         <ConnectPage />
+        <div className="hero-scroll">
+          <span className="hero-scroll__plus">+</span>
+          <span className="hero-scroll__text">SCROLL TO EXPLORE</span>
+          <span className="hero-scroll__plus">+</span>
+        </div>
       </div>
       <BoldIdeas />
       <FeaturedWork />

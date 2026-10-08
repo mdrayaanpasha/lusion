@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import './Nav.css'
 
 const Nav = () => {
-  const [light, setLight] = useState(false)
+  // The hero has its own nav; this global sticky nav only appears
+  // once we scroll past the hero.
+  const [shown, setShown] = useState(false)
 
   useEffect(() => {
     const onScroll = () => {
-      // switch to the light theme once we scroll past the dark 3D hero
-      setLight(window.scrollY > window.innerHeight * 0.75)
+      setShown(window.scrollY > window.innerHeight * 0.85)
     }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -19,7 +20,9 @@ const Nav = () => {
   }, [])
 
   return (
-    <header className={`nav-bar ${light ? 'nav-bar--light' : 'nav-bar--dark'}`}>
+    <header
+      className={`nav-bar nav-bar--light ${shown ? 'nav-bar--shown' : 'nav-bar--hidden'}`}
+    >
       <div className="nav-bar__logo">LUSION</div>
 
       <div className="nav-bar__center">

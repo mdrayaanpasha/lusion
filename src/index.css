@@ -33,9 +33,32 @@ body {
   height: 100vh;
 }
 
-/* the global sticky nav replaces the hero's built-in nav row */
-.hero-3d .nav {
-  display: none;
+/* "+ SCROLL TO EXPLORE +" row pinned to the bottom of the hero */
+.hero-scroll {
+  position: absolute;
+  left: 0;
+  bottom: 1.2em;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(6rem, 22vw, 18rem);
+  z-index: 5;
+  pointer-events: none;
+  color: #141622;
+  font-family: 'Inter', sans-serif;
+}
+
+.hero-scroll__text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+}
+
+.hero-scroll__plus {
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1;
 }
 
 a {
@@ -45,9 +68,9 @@ a {
 
 .container {
   display: grid;
-  padding: 3em 5em 3em 5em;
+  padding: 2em 5em 2.5em 5em;
   grid-template-rows: auto 1fr;
-  gap: 3em;
+  gap: 1.5em;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -62,7 +85,7 @@ a {
 
 .label {
   margin: 0;
-  font-size: 2.5em;
+  font-size: 2em;
   font-weight: 400;
   letter-spacing: 0;
 }
@@ -72,13 +95,13 @@ a {
 }
 
 .caption {
-  font-size: 2.5em;
+  font-size: 1.9em;
   display: inline-block;
-  max-width: 500px;
+  max-width: 460px;
 }
 
 .caption::after {
-  content: "We build epic realtime interactive experience to blow people's mind";
+  content: "We create 3D visual storytelling and interactive web experiences that help brands stand out";
 }
 
 .button {
@@ -118,7 +141,7 @@ a {
 
 @media (max-width: 800px) {
   .caption::after {
-    content: "We build epic realtime interactive experience to blow people's mind";
+    content: "We create 3D visual storytelling and interactive web experiences that help brands stand out";
   }
   .label::after {
     content: 'LUSION';
@@ -146,7 +169,7 @@ a {
     gap: 0.5em;
   }
   .caption::after {
-    content: 'We build epic realtime interactive experience';
+    content: 'We create 3D visual storytelling & interactive web experiences';
   }
   .container {
     padding: 2em 2em 2em 2em;
