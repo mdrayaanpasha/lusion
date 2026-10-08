@@ -1,0 +1,23 @@
+.globe {
+  width: clamp(110px, 12vw, 170px);
+  height: clamp(110px, 12vw, 170px);
+  color: #3a37ff;
+  will-change: transform;
+}
+
+.globe__outline {
+  stroke: currentColor;
+  stroke-width: 1.4;
+  opacity: 0.85;
+}
+
+.globe__lat {
+  stroke: currentColor;
+  stroke-width: 1.1;
+  opacity: 0.4;
+}
+
+.globe__meridian {
+  stroke: currentColor;
+  stroke-width: 1.1;
+}

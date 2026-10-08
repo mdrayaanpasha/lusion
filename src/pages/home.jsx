@@ -2,6 +2,7 @@ import React from 'react'
 import ConnectPage from '../models/connectors.jsx';
 import BoldIdeas from '../components/BoldIdeas.jsx';
 import FeaturedWork from '../components/FeaturedWork.jsx';
+import ImmersiveSection from '../components/ImmersiveSection.jsx';
 
 const Home = () => {
   return (
@@ -16,6 +17,7 @@ const Home = () => {
       </div>
       <BoldIdeas />
       <FeaturedWork />
+      <ImmersiveSection />
     </>
   )
 }

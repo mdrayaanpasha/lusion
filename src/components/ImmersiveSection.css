@@ -1,0 +1,69 @@
+.imm {
+  position: relative;
+  overflow: hidden;
+  background: #eceef6;
+  color: #0b0b10;
+  padding: 12rem 4rem 14rem 4rem;
+  font-family: 'Inter', sans-serif;
+  isolation: isolate;
+}
+
+/* the scroll-drawn cyan scribble sits behind the text */
+.imm__scribble {
+  position: absolute;
+  inset: -6% -4% auto -4%;
+  width: 108%;
+  height: 120%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.imm__scribble path {
+  filter: drop-shadow(0 8px 30px rgba(88, 215, 230, 0.35));
+  will-change: stroke-dashoffset;
+}
+
+.imm__title {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-size: clamp(2.6rem, 8.5vw, 8rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 0.98;
+}
+
+/* each line clips its words so they rise into view */
+.imm__line {
+  display: block;
+}
+
+.imm__word-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0 0.14em 0.08em 0;
+}
+
+.imm__word {
+  display: inline-block;
+  transform: translateY(110%);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .imm__word {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .imm__scribble path {
+    stroke-dashoffset: 0 !important;
+  }
+}
+
+@media (max-width: 800px) {
+  .imm {
+    padding: 7rem 1.5rem 8rem 1.5rem;
+  }
+}

@@ -20,16 +20,42 @@
   font-weight: 500;
   letter-spacing: -0.02em;
   line-height: 0.95;
+  white-space: pre;           /* preserve the typed space */
+}
+
+/* blinking typewriter caret */
+.work__caret {
+  display: inline-block;
+  width: 0.06em;
+  height: 0.82em;
+  margin-left: 0.05em;
+  background: #3a37ff;
+  vertical-align: baseline;
+  animation: tw-blink 0.9s steps(1) infinite;
+}
+
+@keyframes tw-blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+.work__aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.5rem;
 }
 
 .work__intro {
   max-width: 420px;
-  margin: 1rem 0 0 0;
+  margin: 0;
   font-size: 0.95rem;
   font-weight: 500;
   letter-spacing: 0.08em;
   line-height: 1.5;
   text-align: left;
+  opacity: 0;
+  will-change: transform, opacity;
 }
 
 /* two-column grid of equal-size cards */
@@ -43,6 +69,17 @@
 .card {
   display: block;
   cursor: pointer;
+  opacity: 0;                 /* revealed on scroll */
+  will-change: transform, opacity;
+  perspective: 1100px;        /* 3D stage for the tilt */
+
+  /* cursor-driven state (updated from JS) */
+  --rx: 0deg;
+  --ry: 0deg;
+  --mx: 50%;
+  --my: 50%;
+  --dx: 0px;
+  --dy: 0px;
 }
 
 .card__media {
@@ -51,11 +88,42 @@
   aspect-ratio: 16 / 10;
   border-radius: 18px;
   overflow: hidden;
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  clip-path: inset(100% 0 0 0 round 18px);  /* starts wiped away */
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx)) rotateY(var(--ry)) scale(1);
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 10px 30px -18px rgba(10, 10, 20, 0.5);
 }
 
-.card:hover .card__media {
-  transform: scale(0.985);
+/* while actively hovering, follow the cursor quickly; ease back on leave */
+.card.is-hover .card__media {
+  transform: rotateX(var(--rx)) rotateY(var(--ry)) scale(1.035);
+  transition: transform 0.12s ease-out, box-shadow 0.6s ease;
+  box-shadow: 0 40px 80px -30px rgba(10, 10, 20, 0.55);
+}
+
+/* parallax image layer (bigger than frame so it can drift) */
+.card__img {
+  position: absolute;
+  inset: -12% -6%;
+  width: 112%;
+  height: 124%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #cfcfe6;
+  will-change: transform;
+  /* scroll parallax (--scrollY) + cursor depth drift (--dx/--dy) */
+  transform: translate3d(var(--dx), calc(var(--scrollY, 0px) + var(--dy)), 0)
+    scale(1.18);
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card.is-hover .card__img {
+  transform: translate3d(var(--dx), calc(var(--scrollY, 0px) + var(--dy)), 0)
+    scale(1.26);
+  transition: transform 0.12s ease-out;
 }
 
 /* subtle texture over the gradient */
@@ -66,6 +134,99 @@
     radial-gradient(60% 50% at 70% 20%, rgba(255, 255, 255, 0.18), transparent 60%),
     radial-gradient(50% 60% at 20% 80%, rgba(0, 0, 0, 0.18), transparent 60%);
   mix-blend-mode: overlay;
+}
+
+/* spotlight that tracks the cursor */
+.card__glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    260px circle at var(--mx) var(--my),
+    rgba(255, 255, 255, 0.35),
+    rgba(255, 255, 255, 0.08) 35%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+.card.is-hover .card__glow {
+  opacity: 1;
+}
+
+/* diagonal sheen that sweeps across on enter */
+.card__shine {
+  position: absolute;
+  inset: -40%;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.45) 48%,
+    transparent 58%
+  );
+  transform: translateX(-130%) rotate(2deg);
+  transition: transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.card.is-hover .card__shine {
+  transform: translateX(130%) rotate(2deg);
+}
+
+/* crisp inner border that lights up on hover */
+.card__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0);
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
+  pointer-events: none;
+}
+
+.card.is-hover .card__ring {
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: inset 0 0 40px -10px rgba(255, 255, 255, 0.35);
+}
+
+/* floating pill that follows the cursor */
+.card__cursor {
+  position: absolute;
+  left: var(--mx);
+  top: var(--my);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.55em 0.95em;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #0d0d12;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(6px);
+  border-radius: 999px;
+  transform: translate(-50%, -50%) scale(0.4);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.card.is-hover .card__cursor {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.card__cursor-arrow {
+  font-size: 0.9em;
+}
+
+.card__meta {
+  opacity: 0;
+  will-change: transform, opacity;
 }
 
 .card__tags {
@@ -110,6 +271,21 @@
 
 .card:hover .card__label {
   transform: translateX(0.1em);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card__media,
+  .card.is-hover .card__media,
+  .card__img,
+  .card.is-hover .card__img,
+  .card__shine {
+    transition: none;
+    transform: none;
+  }
+  .card__glow,
+  .card__cursor {
+    display: none;
+  }
 }
 
 @media (max-width: 800px) {
