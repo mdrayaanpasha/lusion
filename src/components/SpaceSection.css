@@ -1,7 +1,7 @@
-/* 500vh track drives the pinned 3D scene */
+/* 300vh track drives the pinned 3D scene */
 .space-pin {
   position: relative;
-  height: 500vh;
+  height: 300vh;
   background: #04050a;
 }
 

@@ -5,10 +5,18 @@ const Nav = () => {
   // The hero has its own nav; this global sticky nav only appears
   // once we scroll past the hero.
   const [shown, setShown] = useState(false)
+  // transparent / white theme while over a dark section (space scene)
+  const [onDark, setOnDark] = useState(false)
 
   useEffect(() => {
     const onScroll = () => {
       setShown(window.scrollY > window.innerHeight * 0.85)
+      const dark = document.querySelector('.space-pin')
+      if (dark) {
+        const r = dark.getBoundingClientRect()
+        // the nav sits over the space section's top band
+        setOnDark(r.top <= 80 && r.bottom >= 120)
+      }
     }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -21,7 +29,7 @@ const Nav = () => {
 
   return (
     <header
-      className={`nav-bar nav-bar--light ${shown ? 'nav-bar--shown' : 'nav-bar--hidden'}`}
+      className={`nav-bar ${onDark ? 'nav-bar--space' : 'nav-bar--light'} ${shown ? 'nav-bar--shown' : 'nav-bar--hidden'}`}
     >
       <div className="nav-bar__logo">LUSION</div>
 

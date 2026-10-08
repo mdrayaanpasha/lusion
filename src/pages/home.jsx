@@ -4,6 +4,7 @@ import BoldIdeas from '../components/BoldIdeas.jsx';
 import FeaturedWork from '../components/FeaturedWork.jsx';
 import ImmersiveSection from '../components/ImmersiveSection.jsx';
 import SpaceSection from '../components/SpaceSection.jsx';
+import Footer from '../components/Footer.jsx';
 
 const Home = () => {
   return (
@@ -20,6 +21,7 @@ const Home = () => {
       <FeaturedWork />
       <ImmersiveSection />
       <SpaceSection />
+      <Footer />
     </>
   )
 }

@@ -129,6 +129,26 @@
   color: #fff;
 }
 
+/* ---------- space theme (transparent, over the dark 3D scene) ---------- */
+.nav-bar--space {
+  color: #fff;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.nav-bar--space .nav-bar__icon {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+.nav-bar--space .nav-bar__pill--primary {
+  background: #fff;
+  color: #141622;
+}
+.nav-bar--space .nav-bar__pill--secondary {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
 /* ---------- light theme (over light sections) ---------- */
 .nav-bar--light {
   color: #0d0d12;

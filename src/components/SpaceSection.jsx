@@ -1,7 +1,7 @@
 import * as THREE from 'three'
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { Suspense, useEffect, useMemo, useRef } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { useGLTF, Stars, useTexture, Float } from '@react-three/drei'
+import { useGLTF, Stars, Sparkles, Float } from '@react-three/drei'
 import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing'
 import astronautUrl from '../assets/3d/astronaut.glb'
 import './SpaceSection.css'
@@ -98,26 +98,6 @@ function BlackHole({ progress }) {
   )
 }
 
-/* ---------- Earth (NASA texture) ---------- */
-function Earth({ progress }) {
-  const ref = useRef()
-  const tex = useTexture(`${import.meta.env.BASE_URL}space/earth.jpg`)
-  useFrame((_, dt) => {
-    if (ref.current) {
-      ref.current.rotation.y += dt * 0.03
-      // drifts away as we fall toward the hole
-      const p = progress.current
-      ref.current.position.x = lerp(11, 20, smooth(p))
-    }
-  })
-  return (
-    <mesh ref={ref} position={[11, -3, -10]}>
-      <sphereGeometry args={[4.5, 64, 64]} />
-      <meshStandardMaterial map={tex} roughness={1} metalness={0} />
-    </mesh>
-  )
-}
-
 /* ---------- Astronaut ---------- */
 function Astronaut({ progress }) {
   const { scene } = useGLTF(astronautUrl)
@@ -194,9 +174,11 @@ function Scene({ progress }) {
       <directionalLight position={[8, 6, 10]} intensity={2.2} color="#dCE7ff" />
       <pointLight position={[0, 0, 0]} intensity={6} distance={14} color="#8fb6ff" />
 
-      <Stars radius={120} depth={70} count={9000} factor={4.5} saturation={0} fade speed={0.6} />
+      {/* layered starfields for depth */}
+      <Stars radius={160} depth={90} count={14000} factor={5} saturation={0} fade speed={0.5} />
+      <Stars radius={60} depth={40} count={4000} factor={3} saturation={0} fade speed={1.2} />
+      <Sparkles count={120} scale={[26, 16, 26]} size={2.5} speed={0.3} color="#bcd4ff" opacity={0.7} />
 
-      <Earth progress={damped.current} />
       <BlackHole progress={damped.current} />
       <Float speed={1.4} rotationIntensity={0} floatIntensity={0.6}>
         <Astronaut progress={damped.current} />
@@ -234,11 +216,12 @@ const SpaceSection = () => {
       const p = total > 0 ? clamp(-rect.top / total, 0, 1) : 0
       progress.current = p
 
+      // copy sits beside the scene — reveals progressively through the scroll
       paras.forEach((el, i) => {
-        const start = 0.8 + i * 0.07
-        const e = smooth(clamp((p - start) / 0.16, 0, 1))
+        const start = 0.22 + i * 0.12
+        const e = smooth(clamp((p - start) / 0.2, 0, 1))
         el.style.opacity = e
-        el.style.transform = `translateY(${(1 - e) * 40}px)`
+        el.style.transform = `translateY(${(1 - e) * 44}px)`
       })
       if (hint) hint.style.opacity = `${clamp(1 - p * 6, 0, 1)}`
 
@@ -261,7 +244,9 @@ const SpaceSection = () => {
           gl={{ antialias: true, powerPreference: 'high-performance' }}
           camera={{ position: [0, 1.6, 17], fov: 42, near: 0.1, far: 100 }}
         >
-          <Scene progress={progress} />
+          <Suspense fallback={null}>
+            <Scene progress={progress} />
+          </Suspense>
         </Canvas>
 
         <div className="space__overlay">
